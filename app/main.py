@@ -5,7 +5,7 @@ from PIL import Image
 import io
 import base64
 
-app = FastAPI(title="IMAGDressing API")
+app = FastAPI(title="VITON-HD TryOn API")
 
 # Allow your DigitalOcean frontend
 app.add_middleware(

@@ -9,7 +9,7 @@ Supported registries:
 - GitHub Container Registry (GHCR): the workflow will use `ghcr.io/${{ github.repository_owner }}/xmas-imagdressing` and push when running on GitHub Actions. No additional secrets are required (uses `GITHUB_TOKEN` with `packages: write` permission).
 - Docker Hub: optionally push to Docker Hub if you set `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` repository secrets.
 
-Note: This project depends on the IMAGDressing codebase from https://github.com/muzishen/IMAGDressing. That upstream repository doesn't include standard Python packaging metadata, so we install it at Docker build time by cloning and packaging it locally — see `Dockerfile` for details.
+Note: This project uses VITON-HD (https://github.com/shadow2496/VITON-HD) as the backend virtual try-on implementation. We clone the VITON-HD repo and install necessary dependencies during the Docker build — see `Dockerfile` for details.
 
 Required GitHub repo permissions to push to GHCR:
 - In your workflow file we set `permissions: packages: write` and `contents: read`. That allows the `GITHUB_TOKEN` to push packages to GHCR.
@@ -35,7 +35,7 @@ If you want to customize the image name or tags, edit `.github/workflows/docker-
 Installation (Conda)
 ---------------------
 
-These instructions follow the upstream IMAGDressing README and will create a Conda env and install dependencies.
+These instructions follow the upstream VITON-HD README and will create a Conda env and install dependencies.
 
 1) Create the Conda environment and activate it (we recommend `VITON_HD` name):
 
@@ -58,7 +58,7 @@ The code (`app/model.py`) now uses VITON-HD. To run with the VITON-HD pre-traine
 - Use the HuggingFace Hub `from_pretrained` API in code (requires `huggingface_hub` and to accept terms on the model page):
 	```python
 	from diffusers import DiffusionPipeline
-	pipe = DiffusionPipeline.from_pretrained('IMAGDressing/IMAGDressing')
+	# We now use VITON-HD; if you want to use a different pipeline replace the adapter with your desired model
 	```
 - Or download the repo/weights to a local folder (optional), then point `from_pretrained` at that path.
 

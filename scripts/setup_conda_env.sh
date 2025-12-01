@@ -33,17 +33,17 @@ else
 fi
 
 # Download models from Hugging Face
-# The app/model.py loads the pretrained "IMAGDressing/IMAGDressing" model from Hugging Face.
+# The app/model.py uses VITON-HD; download the VITON-HD checkpoints and data as required by the upstream project.
 # To manually download the model weights, you can:
 # 1) Install huggingface-cli: pip install huggingface_hub
 # 2) Log in: huggingface-cli login
 # 3) Download or use from_pretrained in code: 
 #    from diffusers import DiffusionPipeline
-#    pipe = DiffusionPipeline.from_pretrained('IMAGDressing/IMAGDressing')
+# VITON-HD uses custom checkpoints; follow the VITON-HD README to download and place checkpoints under /opt/VITON-HD/checkpoints.
 
-# Example: If you want to download model weights locally to /models/IMAGDressing:
-# mkdir -p models/IMAGDressing
-# huggingface-cli repo clone --depth=1 IMAGDressing/IMAGDressing models/IMAGDressing
+# Example: If you want to download model weights locally to /opt/VITON-HD/checkpoints:
+# mkdir -p /opt/VITON-HD/checkpoints
+# Download pre-trained `*.pkl` checkpoints from the VITON-HD Google Drive and place them in /opt/VITON-HD/checkpoints
 
 # Note: you will need to accept model terms on Hugging Face if prompted or use a token.
 
