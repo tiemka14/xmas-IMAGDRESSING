@@ -86,7 +86,7 @@ Tip: You can use `scripts/setup_conda_env.sh` to automate the environment creati
 
 Docker & Python notes
 ---------------------
-The Docker image now uses an NVIDIA CUDA 11.8 base and installs Miniconda. A dedicated Conda environment (`IMAGDressing`) with Python 3.10 will be created during image build and is used for all runtime steps. This helps satisfy the IMAGDressing upstream requirement for CUDA 11.8 and ensures PyTorch is installed with the matching CUDA toolkit.
+The Docker image now uses an NVIDIA CUDA 11.8 base and installs Miniconda. A dedicated Conda environment (`VITON_HD`) with Python 3.10 will be created during image build and is used for all runtime steps. This helps ensure PyTorch is installed with the matching CUDA toolkit for VITON-HD.
 
 Build & Run the Docker image (example):
 ```bash

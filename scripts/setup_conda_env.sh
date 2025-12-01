@@ -43,7 +43,7 @@ fi
 
 # Example: If you want to download model weights locally to /opt/VITON-HD/checkpoints:
 # mkdir -p /opt/VITON-HD/checkpoints
-# Download pre-trained `*.pkl` checkpoints from the VITON-HD Google Drive and place them in /opt/VITON-HD/checkpoints
+# Download pre-trained `*.pkl` checkpoints from VITON-HD Google Drive and place them in /opt/VITON-HD/checkpoints
 
 # Note: you will need to accept model terms on Hugging Face if prompted or use a token.
 
