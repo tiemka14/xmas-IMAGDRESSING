@@ -3,13 +3,13 @@ FROM nvidia/cuda:11.8.0-runtime-ubuntu22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
-    git wget bzip2 ca-certificates && \
+    git wget bzip2 ca-certificates curl && \
     apt-get clean
 
 # Install Miniconda
-ARG CONDA_VERSION=py310_23.9.1-0
-ARG CONDA_SH=Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
-RUN wget -q https://repo.anaconda.com/miniconda/${CONDA_SH} -O /tmp/${CONDA_SH} && \
+ARG CONDA_SH=Miniconda3-latest-Linux-x86_64.sh
+RUN wget -q https://repo.anaconda.com/miniconda/${CONDA_SH} -O /tmp/${CONDA_SH} || \
+    (curl -fsSL https://repo.anaconda.com/miniconda/${CONDA_SH} -o /tmp/${CONDA_SH}) && \
     bash /tmp/${CONDA_SH} -b -p /opt/conda && \
     rm /tmp/${CONDA_SH} && \
     /opt/conda/bin/conda clean -tipsy && \
