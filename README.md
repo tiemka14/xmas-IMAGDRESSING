@@ -40,7 +40,7 @@ These instructions follow the upstream IMAGDressing README and will create a Con
 1) Create the Conda environment and activate it:
 
 ```bash
-conda create --name IMAGDressing python=3.8.10 -y
+conda create --name IMAGDressing python=3.10 -y
 conda activate IMAGDressing
 ```
 
@@ -63,3 +63,7 @@ The code (`app/model.py`) uses a checkpoint named `IMAGDressing/IMAGDressing`. T
 - Or download the repo/weights to a local folder (optional), then point `from_pretrained` at that path.
 
 Tip: You can use `scripts/setup_conda_env.sh` to automate the environment creation and requirements installation for local development.
+
+Docker & Python notes
+---------------------
+The Docker image now uses an NVIDIA CUDA 11.8 base and installs Miniconda. A dedicated Conda environment (`IMAGDressing`) with Python 3.10 will be created during image build and is used for all runtime steps. This helps satisfy the IMAGDressing upstream requirement for CUDA 11.8 and ensures PyTorch is installed with the matching CUDA toolkit.

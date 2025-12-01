@@ -5,7 +5,7 @@ set -euo pipefail
 # Purpose: Create conda env, install requirements, and optionally download model from HuggingFace
 
 ENV_NAME=IMAGDressing
-PYTHON_VERSION=3.8.10
+PYTHON_VERSION=3.10.12
 REQUIREMENTS_FILE=requirements.txt
 
 echo "Creating conda environment: $ENV_NAME (Python $PYTHON_VERSION)"
