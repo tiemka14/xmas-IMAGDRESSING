@@ -67,3 +67,14 @@ Tip: You can use `scripts/setup_conda_env.sh` to automate the environment creati
 Docker & Python notes
 ---------------------
 The Docker image now uses an NVIDIA CUDA 11.8 base and installs Miniconda. A dedicated Conda environment (`IMAGDressing`) with Python 3.10 will be created during image build and is used for all runtime steps. This helps satisfy the IMAGDressing upstream requirement for CUDA 11.8 and ensures PyTorch is installed with the matching CUDA toolkit.
+
+Build & Run the Docker image (example):
+```bash
+# Build the image (multi-arch may be slower)
+docker build -t xmas-imagdressing:latest .
+
+# Run the container (requires NVIDIA Container Toolkit for GPU access):
+docker run --gpus all -p 8000:8000 xmas-imagdressing:latest
+```
+
+Inside the container, the app runs with the Conda environment active by default (see `start.sh`).
