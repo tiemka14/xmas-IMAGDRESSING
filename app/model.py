@@ -1,7 +1,7 @@
 import torch
 from torchvision import transforms
 from PIL import Image
-from imagdressing.pipelines.tryon_pipeline import IMAGDressingPipeline
+from imagdressing.pipelines.IMAGDressing_v1_pipeline import IMAGDressing_v1 as IMAGDressingPipeline
 
 
 class IMAGDressingModel:
