@@ -9,6 +9,8 @@ Supported registries:
 - GitHub Container Registry (GHCR): the workflow will use `ghcr.io/${{ github.repository_owner }}/xmas-imagdressing` and push when running on GitHub Actions. No additional secrets are required (uses `GITHUB_TOKEN` with `packages: write` permission).
 - Docker Hub: optionally push to Docker Hub if you set `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` repository secrets.
 
+Note: This project depends on the IMAGDressing codebase from https://github.com/muzishen/IMAGDressing. That upstream repository doesn't include standard Python packaging metadata, so we install it at Docker build time by cloning and packaging it locally — see `Dockerfile` for details.
+
 Required GitHub repo permissions to push to GHCR:
 - In your workflow file we set `permissions: packages: write` and `contents: read`. That allows the `GITHUB_TOKEN` to push packages to GHCR.
 
