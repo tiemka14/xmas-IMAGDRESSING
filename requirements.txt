@@ -12,4 +12,4 @@ torchgeometry
 kornia
 # The VITON-HD repository is cloned and installed during the Docker build. Keep any upstream git pins commented
 # if you want to transform into a proper package in the future.
-# git+https://github.com/muzishen/IMAGDressing.git
+# (Previously used IMAGDressing git link; switched to VITON-HD and local adapter)
