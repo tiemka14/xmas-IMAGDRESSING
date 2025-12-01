@@ -23,14 +23,14 @@ ENV PATH=/opt/conda/bin:$PATH
 ENV PYTHONPATH=/opt/VITON-HD
 
 # Create conda env to satisfy Python & GPU package requirements
-RUN conda create -y -n VITON_HD python=3.10 && \
-    conda run -n VITON_HD python -m pip install --upgrade pip
+RUN /opt/conda/bin/conda create -y -n VITON_HD python=3.10 && \
+    /opt/conda/envs/VITON_HD/bin/python -m pip install --upgrade pip
 
 # Install PyTorch + CUDA using conda to ensure GPU compatibility
-RUN conda install -n VITON_HD -y -c pytorch -c nvidia pytorch=2.1 torchvision=0.16 pytorch-cuda=11.8 && \
+RUN /opt/conda/bin/conda install -n VITON_HD -y -c pytorch -c nvidia pytorch=2.1 torchvision=0.16 pytorch-cuda=11.8 && \
     # Install other pip requirements (exclude torch and torchvision to avoid conflicts)
     grep -vE "^(torch|torchvision)==" requirements.txt > /tmp/reqs_pip.txt && \
-    conda run -n VITON_HD pip install -r /tmp/reqs_pip.txt && rm /tmp/reqs_pip.txt
+    /opt/conda/envs/VITON_HD/bin/pip install -r /tmp/reqs_pip.txt && rm /tmp/reqs_pip.txt
 
 # Install VITON-HD from upstream repo into /opt/VITON-HD
 RUN set -eux; \
@@ -44,8 +44,8 @@ RUN set -eux; \
     printf "[build-system]\nrequires = [\"setuptools\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n" > /opt/VITON-HD/pyproject.toml; \
     printf "from setuptools import setup, find_packages\nsetup(name=\"viton_hd\", packages=find_packages())\n" > /opt/VITON-HD/setup.py; \
     # Install runtime dependencies for VITON-HD into the conda env
-    conda run -n VITON_HD pip install -U opencv-python torchgeometry || true; \
-    conda run -n VITON_HD pip install /opt/VITON-HD || true;
+    /opt/conda/envs/VITON_HD/bin/pip install -U opencv-python torchgeometry || true; \
+    /opt/conda/envs/VITON_HD/bin/pip install /opt/VITON-HD || true;
 
 COPY . .
 
