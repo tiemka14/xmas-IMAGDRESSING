@@ -55,6 +55,26 @@ pip install -r requirements.txt
 
 The code (`app/model.py`) now uses VITON-HD. To run with the VITON-HD pre-trained checkpoints, download them from the VITON-HD Google Drive and place them in `/opt/VITON-HD/checkpoints/` (or set environment variables as appropriate). To run VITON-HD tests directly use their `test.py` script in the `VITON-HD` repo.
 
+Configuring VITON-HD in this project
+------------------------------------
+
+1) Download the pre-trained checkpoints from VITON-HD Google Drive into `VITON-HD/checkpoints` (on your machine or in the Docker image under `/opt/VITON-HD/checkpoints`).
+2) Optionally create a `datasets/test_pairs.txt` inside `VITON-HD` pointing to the person/clothing images you want to try. The `VITON-HD` `test.py` script expects a structured dataset.
+3) Run the local server (or Docker) and POST to `/tryon` with `person` and `cloth` files: the server will run the `VITON-HD` `test.py` inference if checkpoints are present, otherwise it falls back to a simple overlay implementation.
+
+Example (manual run):
+```bash
+# Run the local conda installed app
+conda activate VITON_HD
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+Example (docker build & run):
+```bash
+docker build -t xmas-viton:latest .
+docker run --gpus all -p 8000:8000 xmas-viton:latest
+```
+
 - Use the HuggingFace Hub `from_pretrained` API in code (requires `huggingface_hub` and to accept terms on the model page):
 	```python
 	from diffusers import DiffusionPipeline
