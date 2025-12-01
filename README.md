@@ -1,3 +1,13 @@
+Troubleshooting Docker builds
+---------------------------
+If the Docker build fails with conda or caching errors, rebuild without cache locally to ensure the Dockerfile's updated instructions are used:
+
+```bash
+docker build --no-cache -t xmas-imagdressing:local .
+```
+
+In CI, you can re-run the workflow or push a trivial commit to invalidate the cache if you see stale behaviors after edits.
+
 # xmas-IMAGDRESSING
 
 CI / Docker image build and push
