@@ -1,0 +1,9 @@
+fastapi==0.110.0
+uvicorn==0.29.0
+torch==2.1.0
+torchvision==0.16.0
+Pillow
+accelerate
+transformers
+diffusers
+git+https://github.com/muzishen/IMAGDressing.git
