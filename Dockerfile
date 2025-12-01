@@ -20,6 +20,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 ENV PATH=/opt/conda/bin:$PATH
+ENV PYTHONPATH=/opt/VITON-HD:$PYTHONPATH
 
 # Create conda env to satisfy Python & GPU package requirements
 RUN conda create -y -n VITON_HD python=3.10 && \
