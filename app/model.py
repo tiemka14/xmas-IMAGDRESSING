@@ -1,19 +1,17 @@
 import torch
 from torchvision import transforms
 from PIL import Image
-from imagdressing.pipelines.IMAGDressing_v1_pipeline import IMAGDressing_v1 as IMAGDressingPipeline
+from viton_adapter import VITONAdapter
 
 
-class IMAGDressingModel:
+class VITONModel:
+    """Adapter-based VITON model class used by the app.
+    It will use VITON-HD (if installed) or fall back to a simple overlay for demo.
+    """
     def __init__(self, device="cuda"):
-        print("Loading IMAGDressing model...")
+        print("Loading VITON-HD adapter...")
         self.device = device
-
-        # Load model (modify path if needed)
-        self.pipe = IMAGDressingPipeline.from_pretrained(
-            "IMAGDressing/IMAGDressing",
-            torch_dtype=torch.float16,
-        ).to(self.device)
+        self.adapter = VITONAdapter()
 
         self.preprocess = transforms.Compose([
             transforms.Resize((512, 384)),
@@ -21,14 +19,8 @@ class IMAGDressingModel:
         ])
 
     def run(self, person_img: Image.Image, cloth_img: Image.Image):
-        person_tensor = self.preprocess(person_img).unsqueeze(0).to(self.device)
-        cloth_tensor = self.preprocess(cloth_img).unsqueeze(0).to(self.device)
-
-        with torch.inference_mode():
-            result = self.pipe(
-                person_image=person_tensor,
-                garment_image=cloth_tensor,
-            )
-
-        output = result.images[0]
+        # Use the adapter to produce an output PIL Image
+        output = self.adapter.run(person_img, cloth_img)
+        if output is None:
+            raise RuntimeError("VITON inference failed or no output was created")
         return output

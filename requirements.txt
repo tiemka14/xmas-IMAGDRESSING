@@ -6,6 +6,9 @@ Pillow
 accelerate
 transformers
 diffusers
+# VITON-HD requirements
+opencv-python
+torchgeometry
 # The IMAGDressing repository is not pip-installable directly (it lacks setup.py/pyproject).
 # We install it during the Docker build by cloning and making it installable. Keep this commented
 # if you want to install locally via git in the future, transform into a proper package.

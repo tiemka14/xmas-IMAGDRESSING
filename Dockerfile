@@ -31,22 +31,20 @@ RUN conda install -n IMAGDressing -y -c pytorch -c nvidia pytorch=2.1 torchvisio
     grep -vE "^(torch|torchvision)==" requirements.txt > /tmp/reqs_pip.txt && \
     conda run -n IMAGDressing pip install -r /tmp/reqs_pip.txt && rm /tmp/reqs_pip.txt
 
-# Install IMAGDressing from upstream repo and make it importable as 'imagdressing'
+# Install VITON-HD from upstream repo into /opt/VITON-HD
 RUN set -eux; \
-    git clone https://github.com/muzishen/IMAGDressing.git /tmp/IMAGDressing; \
-    # Move dressing_sd to package name 'imagdressing' so our imports match
-    if [ -d /tmp/IMAGDressing/dressing_sd ]; then \
-        mv /tmp/IMAGDressing/dressing_sd /tmp/IMAGDressing/imagdressing; \
-        if [ ! -f /tmp/IMAGDressing/imagdressing/__init__.py ]; then touch /tmp/IMAGDressing/imagdressing/__init__.py; fi; \
-        if [ -d /tmp/IMAGDressing/imagdressing/pipelines ] && [ ! -f /tmp/IMAGDressing/imagdressing/pipelines/__init__.py ]; then touch /tmp/IMAGDressing/imagdressing/pipelines/__init__.py; fi; \
+    git clone https://github.com/shadow2496/VITON-HD.git /opt/VITON-HD; \
+    # Keep repo at /opt/VITON-HD; add __init__ markers if necessary
+    if [ -d /opt/VITON-HD ]; then \
+        if [ ! -f /opt/VITON-HD/__init__.py ]; then touch /opt/VITON-HD/__init__.py; fi; \
     fi; \
     # Create minimal packaging to allow pip installation
     printf "[build-system]\nrequires = [\"setuptools\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n" > /tmp/IMAGDressing/pyproject.toml; \
-    printf "from setuptools import setup, find_packages\nsetup(name=\"imagdressing\", packages=find_packages())\n" > /tmp/IMAGDressing/setup.py; \
-    # Use conda-run to install upstream requirements and package into our env
-    if [ -f /tmp/IMAGDressing/requirements.txt ]; then conda run -n IMAGDressing pip install -r /tmp/IMAGDressing/requirements.txt || true; fi; \
-    conda run -n IMAGDressing pip install /tmp/IMAGDressing; \
-    rm -rf /tmp/IMAGDressing
+    printf "[build-system]\nrequires = [\"setuptools\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n" > /opt/VITON-HD/pyproject.toml; \
+    printf "from setuptools import setup, find_packages\nsetup(name=\"viton_hd\", packages=find_packages())\n" > /opt/VITON-HD/setup.py; \
+    # Install runtime dependencies for VITON-HD into the conda env
+    conda run -n IMAGDressing pip install -U opencv-python torchgeometry || true; \
+    conda run -n IMAGDressing pip install /opt/VITON-HD || true; \
 
 COPY . .
 
