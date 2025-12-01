@@ -1,6 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from app.model import IMAGDressingModel
+from app.model import VITONModel
 from PIL import Image
 import io
 import base64
@@ -16,7 +16,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = IMAGDressingModel(device="cuda")
+model = VITONModel(device="cuda")
 
 @app.post("/tryon")
 async def tryon(person: UploadFile = File(...), cloth: UploadFile = File(...)):

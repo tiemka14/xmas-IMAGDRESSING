@@ -1,7 +1,6 @@
-import torch
 from torchvision import transforms
 from PIL import Image
-from viton_adapter import VITONAdapter
+from app.viton_adapter import VITONAdapter
 
 
 class VITONModel:
