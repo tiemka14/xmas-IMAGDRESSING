@@ -12,7 +12,7 @@ RUN wget -q https://repo.anaconda.com/miniconda/${CONDA_SH} -O /tmp/${CONDA_SH} 
     (curl -fsSL https://repo.anaconda.com/miniconda/${CONDA_SH} -o /tmp/${CONDA_SH}) && \
     bash /tmp/${CONDA_SH} -b -p /opt/conda && \
     rm /tmp/${CONDA_SH} && \
-    /opt/conda/bin/conda clean -tipsy && \
+    /opt/conda/bin/conda clean -a -y && \
     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
     apt-get clean
 
@@ -20,7 +20,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 ENV PATH=/opt/conda/bin:$PATH
-ENV PYTHONPATH=/opt/VITON-HD:$PYTHONPATH
+ENV PYTHONPATH=/opt/VITON-HD
 
 # Create conda env to satisfy Python & GPU package requirements
 RUN conda create -y -n VITON_HD python=3.10 && \
@@ -40,12 +40,12 @@ RUN set -eux; \
         if [ ! -f /opt/VITON-HD/__init__.py ]; then touch /opt/VITON-HD/__init__.py; fi; \
     fi; \
     # Create minimal packaging to allow pip installation
-    printf "[build-system]\nrequires = [\"setuptools\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n" > /tmp/IMAGDressing/pyproject.toml; \
+    # (no longer using /tmp/IMAGDressing)
     printf "[build-system]\nrequires = [\"setuptools\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n" > /opt/VITON-HD/pyproject.toml; \
     printf "from setuptools import setup, find_packages\nsetup(name=\"viton_hd\", packages=find_packages())\n" > /opt/VITON-HD/setup.py; \
     # Install runtime dependencies for VITON-HD into the conda env
     conda run -n VITON_HD pip install -U opencv-python torchgeometry || true; \
-    conda run -n VITON_HD pip install /opt/VITON-HD || true; \
+    conda run -n VITON_HD pip install /opt/VITON-HD || true;
 
 COPY . .
 
