@@ -10,7 +10,6 @@ diffusers
 opencv-python
 torchgeometry
 kornia
-# The IMAGDressing repository is not pip-installable directly (it lacks setup.py/pyproject).
-# We install it during the Docker build by cloning and making it installable. Keep this commented
-# if you want to install locally via git in the future, transform into a proper package.
+# The VITON-HD repository is cloned and installed during the Docker build. Keep any upstream git pins commented
+# if you want to transform into a proper package in the future.
 # git+https://github.com/muzishen/IMAGDressing.git
