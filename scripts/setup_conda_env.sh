@@ -4,7 +4,7 @@ set -euo pipefail
 # Script: scripts/setup_conda_env.sh
 # Purpose: Create conda env, install requirements, and optionally download model from HuggingFace
 
-ENV_NAME=IMAGDressing
+ENV_NAME=VITON_HD
 PYTHON_VERSION=3.10.12
 REQUIREMENTS_FILE=requirements.txt
 

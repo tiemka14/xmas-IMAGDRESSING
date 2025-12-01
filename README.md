@@ -37,11 +37,11 @@ Installation (Conda)
 
 These instructions follow the upstream IMAGDressing README and will create a Conda env and install dependencies.
 
-1) Create the Conda environment and activate it:
+1) Create the Conda environment and activate it (we recommend `VITON_HD` name):
 
 ```bash
-conda create --name IMAGDressing python=3.10 -y
-conda activate IMAGDressing
+conda create --name VITON_HD python=3.10 -y
+conda activate VITON_HD
 ```
 
 2) Upgrade pip and install requirements:
@@ -53,7 +53,7 @@ pip install -r requirements.txt
 
 3) Download the model from Hugging Face:
 
-The code (`app/model.py`) uses a checkpoint named `IMAGDressing/IMAGDressing`. To download or use the model in your setup, you can:
+The code (`app/model.py`) now uses VITON-HD. To run with the VITON-HD pre-trained checkpoints, download them from the VITON-HD Google Drive and place them in `/opt/VITON-HD/checkpoints/` (or set environment variables as appropriate). To run VITON-HD tests directly use their `test.py` script in the `VITON-HD` repo.
 
 - Use the HuggingFace Hub `from_pretrained` API in code (requires `huggingface_hub` and to accept terms on the model page):
 	```python
