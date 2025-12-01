@@ -6,7 +6,6 @@ from typing import Optional
 from PIL import Image
 import io
 import json
-import numpy as np
 
 
 class VITONAdapter:
@@ -92,6 +91,7 @@ class VITONAdapter:
             os.makedirs(results_dir, exist_ok=True)
 
             if inline_success:
+                import numpy as np
                 import torch
                 from torch.nn import functional as F
                 from torchvision import transforms
