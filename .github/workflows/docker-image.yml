@@ -21,6 +21,8 @@ jobs:
     env:
       IMAGE_NAME: ${{ github.repository_owner }}/xmas-imagdressing
       DOCKER_TAG: ${{ github.sha }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -52,23 +54,23 @@ jobs:
           file: ./Dockerfile
 
       - name: Login to Docker Hub
-        if: ${{ secrets.DOCKERHUB_USERNAME != '' && secrets.DOCKERHUB_TOKEN != '' }}
+        if: ${{ env.DOCKERHUB_USERNAME != '' && env.DOCKERHUB_TOKEN != '' }}
         uses: docker/login-action@v4
         with:
           registry: docker.io
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ env.DOCKERHUB_TOKEN }}
 
       - name: Build and push to Docker Hub
-        if: ${{ secrets.DOCKERHUB_USERNAME != '' && secrets.DOCKERHUB_TOKEN != '' }}
+        if: ${{ env.DOCKERHUB_USERNAME != '' && env.DOCKERHUB_TOKEN != '' }}
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/xmas-imagdressing:latest
-            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/xmas-imagdressing:${{ env.DOCKER_TAG }}
+            docker.io/${{ env.DOCKERHUB_USERNAME }}/xmas-imagdressing:latest
+            docker.io/${{ env.DOCKERHUB_USERNAME }}/xmas-imagdressing:${{ env.DOCKER_TAG }}
           file: ./Dockerfile
 
       - name: Image push summary
@@ -76,7 +78,7 @@ jobs:
           echo "Pushed image tags:"
           echo "- ghcr.io/${{ env.IMAGE_NAME }}:latest"
           echo "- ghcr.io/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}"
-          if [[ -n "${{ secrets.DOCKERHUB_USERNAME }}" ]]; then
-            echo "- docker.io/${{ secrets.DOCKERHUB_USERNAME }}/xmas-imagdressing:latest"
-            echo "- docker.io/${{ secrets.DOCKERHUB_USERNAME }}/xmas-imagdressing:${{ env.DOCKER_TAG }}"
+          if [[ -n "${{ env.DOCKERHUB_USERNAME }}" ]]; then
+            echo "- docker.io/${{ env.DOCKERHUB_USERNAME }}/xmas-imagdressing:latest"
+            echo "- docker.io/${{ env.DOCKERHUB_USERNAME }}/xmas-imagdressing:${{ env.DOCKER_TAG }}"
           fi
