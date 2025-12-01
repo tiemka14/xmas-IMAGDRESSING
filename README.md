@@ -31,3 +31,35 @@ Example of image names pushed by the workflow:
 - Docker Hub: `docker.io/<DOCKERHUB_USERNAME>/xmas-imagdressing:latest` and `docker.io/<DOCKERHUB_USERNAME>/xmas-imagdressing:<COMMIT_SHA>`
 
 If you want to customize the image name or tags, edit `.github/workflows/docker-image.yml`.
+
+Installation (Conda)
+---------------------
+
+These instructions follow the upstream IMAGDressing README and will create a Conda env and install dependencies.
+
+1) Create the Conda environment and activate it:
+
+```bash
+conda create --name IMAGDressing python=3.8.10 -y
+conda activate IMAGDressing
+```
+
+2) Upgrade pip and install requirements:
+
+```bash
+pip install -U pip
+pip install -r requirements.txt
+```
+
+3) Download the model from Hugging Face:
+
+The code (`app/model.py`) uses a checkpoint named `IMAGDressing/IMAGDressing`. To download or use the model in your setup, you can:
+
+- Use the HuggingFace Hub `from_pretrained` API in code (requires `huggingface_hub` and to accept terms on the model page):
+	```python
+	from diffusers import DiffusionPipeline
+	pipe = DiffusionPipeline.from_pretrained('IMAGDressing/IMAGDressing')
+	```
+- Or download the repo/weights to a local folder (optional), then point `from_pretrained` at that path.
+
+Tip: You can use `scripts/setup_conda_env.sh` to automate the environment creation and requirements installation for local development.
